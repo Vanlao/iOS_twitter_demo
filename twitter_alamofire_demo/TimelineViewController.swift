@@ -18,8 +18,8 @@ class TimelineViewController: UIViewController, UITableViewDataSource {
         refreshControl = UIRefreshControl()
         //set auto layout.
         tableViewer.dataSource = self
-        tableViewer.rowHeight = 150
-        tableViewer.estimatedRowHeight = 30
+        tableViewer.rowHeight = UITableViewAutomaticDimension
+        tableViewer.estimatedRowHeight = 40
         //refresh control.
         refreshControl.addTarget(self, action: #selector(TimelineViewController.PulledToRefresh(_:)), for: .valueChanged)
         tableViewer.insertSubview(refreshControl, at: 0)
@@ -45,7 +45,7 @@ class TimelineViewController: UIViewController, UITableViewDataSource {
     }
     
     @IBAction func onLogOut(_ sender: Any) {
-        APIManager.logout()
+        APIManager.shared.logout()
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{

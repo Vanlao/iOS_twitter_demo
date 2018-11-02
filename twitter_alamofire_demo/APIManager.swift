@@ -50,6 +50,13 @@ class APIManager: SessionManager {
         }
     }
     
+    func logout() {
+        // 1. Clear current user
+        // TODO: 2. Deauthorize OAuth tokens
+        clearCredentials()
+        // 3. Post logout notification
+        NotificationCenter.default.post(name: NSNotification.Name("didLogout"), object: nil)
+    }
 
     func getCurrentAccount(completion: @escaping (User?, Error?) -> ()) {
         request(URL(string: "https://api.twitter.com/1.1/account/verify_credentials.json")!)
@@ -197,18 +204,29 @@ class APIManager: SessionManager {
 
     //wsfd
     
-    static func logout() {
-        // 1. Clear current user
-        User.current = nil
-        // TODO: 2. Deauthorize OAuth tokens
-        shared.clearCredentials()
-        // 3. Post logout notification
-        NotificationCenter.default.post(name: NSNotification.Name("didLogout"), object: nil)
-    }
     
-    func favorite(_ tweet: Tweet, completion: @escaping (Tweet?, Error?) -> ()) {
-        let urlString = "https://api.twitter.com/1.1/favorites/create.json"
+    
+    //all credits to Jacbo Frick who helped me make a different use of calling tweet action.
+    enum TweetRequest: String {
+        case CallFavorite = "https://api.twitter.com/1.1/favorites/create.json"
+        case CallUnfavorite = "https://api.twitter.com/1.1/favorites/destroy.json"
+        case CallRetweet = "https://api.twitter.com/1.1/statuses/retweet/"
+        case CallUnretweet = "https://api.twitter.com/1.1/statuses/unretweet/"
+    }
+    // A replacement from the regular sending network request method.
+    //All credits to Jacob Frick.
+    func performTweetAction(_ tweet: Tweet, _ action: TweetRequest, completion: @escaping (Tweet?, Error?) -> ()) {
+        var urlString = ""  // URL string is initialized as empty.
+        if action == .CallRetweet || action == .CallUnretweet {
+            urlString = "\(action.rawValue)\((tweet.id)!).json"
+            
+        } else {
+            urlString = action.rawValue
+            //rawValue here would be taken from any case in
+            //any case TweetRequest depends on what was called.
+        }
         let parameters = ["id": tweet.id]
+        // from here, the request method is the same as the regular one.
         request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.queryString).validate().responseJSON { (response) in
             if response.result.isSuccess,
                 let tweetDictionary = response.result.value as? [String: Any] {

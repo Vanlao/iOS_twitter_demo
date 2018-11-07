@@ -15,8 +15,8 @@ The following **required** functionality is completed:
 - [x] Create Data Models for User and Tweet. (1pt)
 - [x] User can view last 20 tweets from their home timeline with the user profile picture, username, tweet text, and timestamp. (2pts)
 - [x] User can pull to refresh. (1pt)
-- [ ] User can tap the retweet and favorite buttons in a tweet cell to retweet and/or favorite a tweet. (2pts)
-- [ ] Using AutoLayout, the Tweet cell should adjust it's layout for iPhone 7, Plus and SE device sizes as well as accommodate device rotation. (1pt)
+- [x] User can tap the retweet and favorite buttons in a tweet cell to retweet and/or favorite a tweet. (2pts)
+- [x] Using AutoLayout, the Tweet cell should adjust it's layout for iPhone 7, Plus and SE device sizes as well as accommodate device rotation. (1pt)
 
 The following **stretch** features are implemented:
 
@@ -39,7 +39,7 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![](https://i.imgur.com/tc54wem.gif), ![](https://i.imgur.com/Ov5zWbY.gif), ![](https://i.imgur.com/eytnRBw.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
